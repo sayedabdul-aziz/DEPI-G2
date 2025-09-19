@@ -15,7 +15,7 @@ class CounterScreen extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: Colors.black,
-          title: Text('Counter Screen', style: TextStyle(color: Colors.white)),
+          title: Text('Counter App', style: TextStyle(color: Colors.white)),
         ),
         body: BlocConsumer<CounterBloc, CounterBlocState>(
           listener: (context, state) {
