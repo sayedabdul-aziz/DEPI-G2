@@ -1,10 +1,19 @@
+import 'package:bookia/core/routes/routes.dart';
+import 'package:bookia/core/services/dio_provider.dart';
 import 'package:bookia/core/utils/app_colors.dart';
 import 'package:bookia/core/utils/app_fonts.dart';
 import 'package:bookia/core/utils/text_styles.dart';
-import 'package:bookia/features/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
+// baseUrl = "https://api.bookia.com"
+// endpoint = "/login"
+// Api Method
+// Request (Body, Headers, Query Parameters)
+// Response (Statues code, Body)
+// Token
+
 void main() {
+  DioProvider.init();
   runApp(const MainApp());
 }
 
@@ -13,7 +22,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: Routes.routes,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: AppColors.backgroundColor,
@@ -50,7 +60,6 @@ class MainApp extends StatelessWidget {
           ),
         ),
       ),
-      home: SplashScreen(),
     );
   }
 }

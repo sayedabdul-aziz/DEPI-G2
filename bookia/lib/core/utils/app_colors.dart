@@ -9,11 +9,9 @@ class AppColors {
   static const Color cardColor = Color(0xFFF5EFE1);
   static const Color backgroundColor = Color(0xFFFFFFFF);
   static const Color errorColor = Color(0xFFFF0000);
-
 }
-
 
 // RRGGBB
 
-// AppColors().primaryColor 
+// AppColors().primaryColor
 // AppColors.primaryColor >> Must

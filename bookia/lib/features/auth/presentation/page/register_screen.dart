@@ -1,12 +1,18 @@
+import 'dart:developer';
+
 import 'package:bookia/core/constants/app_images.dart';
 import 'package:bookia/core/routes/navigation.dart';
+import 'package:bookia/core/routes/routes.dart';
 import 'package:bookia/core/utils/app_colors.dart';
 import 'package:bookia/core/utils/text_styles.dart';
 import 'package:bookia/core/widgets/custom_text_form_field.dart';
+import 'package:bookia/core/widgets/dialogs.dart';
 import 'package:bookia/core/widgets/main_button.dart';
 import 'package:bookia/core/widgets/password_text_form_field.dart';
-import 'package:bookia/features/auth/presentation/page/login_screen.dart';
+import 'package:bookia/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:bookia/features/auth/presentation/cubit/auth_states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
@@ -18,29 +24,39 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  var formKey = GlobalKey<FormState>();
-  var nameController = TextEditingController();
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
-  var confirmPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: SvgPicture.asset(AppImages.backSvg),
-            ),
-          ],
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is AuthLoadingState) {
+          showLoadingDialog(context);
+        } else if (state is AuthErrorState) {
+          pop(context);
+          showErrorDialog(context, 'Auth Failed');
+        } else if (state is AuthSuccessState) {
+          // push To Home
+          pop(context);
+          log('Auth Success');
+        }
+      },
+
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: SvgPicture.asset(AppImages.backSvg),
+              ),
+            ],
+          ),
         ),
+        body: _buildRegisterBody(),
+        bottomNavigationBar: _bottomAction(),
       ),
-      body: _buildRegisterBody(),
-      bottomNavigationBar: _bottomAction(),
     );
   }
 
@@ -53,7 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           Text("Already have an account?", style: TextStyles.textStyle15),
           TextButton(
             onPressed: () {
-              pushReplacementTo(context, LoginScreen());
+              pushReplacementTo(context, Routes.login);
             },
             child: Text(
               "Sign in",
@@ -67,12 +83,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Padding _buildRegisterBody() {
+  Widget _buildRegisterBody() {
+    var cubit = context.read<AuthCubit>();
     return Padding(
       padding: const EdgeInsets.all(22),
       child: SingleChildScrollView(
         child: Form(
-          key: formKey,
+          key: cubit.formKey,
           child: Column(
             children: [
               Text(
@@ -81,7 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               Gap(32),
               CustomTextFormField(
-                controller: nameController,
+                controller: cubit.nameController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your name';
@@ -90,8 +107,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 },
                 hintText: 'Full name',
               ),
+              Gap(15),
               CustomTextFormField(
-                controller: emailController,
+                controller: cubit.emailController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your email';
@@ -102,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               Gap(15),
               PasswordTextFormField(
-                controller: passwordController,
+                controller: cubit.passwordController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your password';
@@ -115,7 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               Gap(15),
               PasswordTextFormField(
-                controller: passwordController,
+                controller: cubit.confirmPasswordController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your password';
@@ -131,7 +149,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               MainButton(
                 text: 'Sign Up',
                 onPressed: () {
-                  if (formKey.currentState!.validate()) {}
+                  if (cubit.formKey.currentState!.validate()) {
+                    context.read<AuthCubit>().register();
+                  }
                 },
               ),
             ],
