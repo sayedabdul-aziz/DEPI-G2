@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bookia/core/constants/app_images.dart';
 import 'package:bookia/core/routes/navigation.dart';
 import 'package:bookia/core/routes/routes.dart';
@@ -16,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+
+// main>
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -35,9 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
           pop(context);
           showErrorDialog(context, 'Something went wrong');
         } else if (state is AuthSuccessState) {
-          // navigate to home screen
-          pop(context);
-          log("Login Success");
+          pushToBase(context, Routes.main);
         }
       },
       child: Scaffold(

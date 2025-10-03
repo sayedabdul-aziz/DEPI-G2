@@ -35,6 +35,12 @@ class MainApp extends StatelessWidget {
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(foregroundColor: AppColors.darkColor),
         ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+        ),
         dividerTheme: DividerThemeData(color: AppColors.borderColor),
         inputDecorationTheme: InputDecorationTheme(
           fillColor: AppColors.accentColor,

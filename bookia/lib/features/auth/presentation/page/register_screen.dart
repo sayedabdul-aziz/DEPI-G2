@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bookia/core/constants/app_images.dart';
 import 'package:bookia/core/routes/navigation.dart';
 import 'package:bookia/core/routes/routes.dart';
@@ -34,9 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           pop(context);
           showErrorDialog(context, 'Auth Failed');
         } else if (state is AuthSuccessState) {
-          // push To Home
-          pop(context);
-          log('Auth Success');
+          pushToBase(context, Routes.main);
         }
       },
 

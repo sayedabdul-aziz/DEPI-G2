@@ -9,6 +9,10 @@ pushReplacementTo(BuildContext context, String path, {Object? extra}) {
   context.pushReplacement(path, extra: extra);
 }
 
+pushToBase(BuildContext context, String path, {Object? extra}) {
+  context.go(path, extra: extra);
+}
+
 pop(BuildContext context) {
   context.pop();
 }
