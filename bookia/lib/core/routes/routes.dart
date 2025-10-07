@@ -2,6 +2,8 @@ import 'package:bookia/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:bookia/features/auth/presentation/page/forget_password/forget_send_email_screen.dart';
 import 'package:bookia/features/auth/presentation/page/login_screen.dart';
 import 'package:bookia/features/auth/presentation/page/register_screen.dart';
+import 'package:bookia/features/home/data/models/best_seller_response/product.dart';
+import 'package:bookia/features/home/presentation/page/details_screen.dart';
 import 'package:bookia/features/main/main_app_screen.dart';
 import 'package:bookia/features/splash/splash_screen.dart';
 import 'package:bookia/features/welcome/welcome_screen.dart';
@@ -15,6 +17,7 @@ class Routes {
   static const String register = '/register';
   static const String forgetSendEmail = '/forget-send-email';
   static const String main = '/main';
+  static const String details = '/details';
 
   static final routes = GoRouter(
     initialLocation: splash,
@@ -48,6 +51,12 @@ class Routes {
       ),
 
       GoRoute(path: main, builder: (context, state) => const MainAppScreen()),
+
+      GoRoute(
+        path: details,
+        builder: (context, state) =>
+            DetailsScreen(product: state.extra as Product),
+      ),
     ],
   );
 }

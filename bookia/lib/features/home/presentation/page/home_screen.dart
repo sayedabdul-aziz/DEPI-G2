@@ -14,9 +14,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit()..getBestSeller(),
+      create: (context) => HomeCubit()..getInitData(),
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: false,
           title: SvgPicture.asset(AppImages.logoSvg, height: 30),
           actions: [
             IconButton(
@@ -38,7 +39,7 @@ class HomeScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    HomeSlider(),
+                    HomeSlider(sliders: cubit.sliders),
                     Gap(20),
                     BestSellerBuilder(products: cubit.products),
                   ],

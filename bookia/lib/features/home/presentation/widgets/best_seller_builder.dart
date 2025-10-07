@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class BestSellerBuilder extends StatelessWidget {
-  const BestSellerBuilder({super.key, this.products});
+  const BestSellerBuilder({super.key, required this.products});
 
-  final List<Product>? products;
+  final List<Product> products;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class BestSellerBuilder extends StatelessWidget {
         GridView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemCount: products?.length,
+          itemCount: products.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 10,
@@ -27,9 +27,7 @@ class BestSellerBuilder extends StatelessWidget {
             mainAxisExtent: 300,
           ),
           itemBuilder: (context, index) {
-            return BookCard(
-              product: products?[index],
-            );
+            return BookCard(product: products[index]);
           },
         ),
       ],
