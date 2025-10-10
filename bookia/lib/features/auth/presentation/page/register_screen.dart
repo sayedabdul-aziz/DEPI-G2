@@ -30,7 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           showLoadingDialog(context);
         } else if (state is AuthErrorState) {
           pop(context);
-          showErrorDialog(context, 'Auth Failed');
+          showMyDialog(context, 'Auth Failed');
         } else if (state is AuthSuccessState) {
           pushToBase(context, Routes.main);
         }

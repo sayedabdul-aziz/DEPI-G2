@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
           showLoadingDialog(context);
         } else if (state is AuthErrorState) {
           pop(context);
-          showErrorDialog(context, 'Something went wrong');
+          showMyDialog(context, 'Something went wrong');
         } else if (state is AuthSuccessState) {
           pushToBase(context, Routes.main);
         }

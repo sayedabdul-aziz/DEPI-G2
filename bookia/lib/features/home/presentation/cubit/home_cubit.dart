@@ -1,9 +1,11 @@
+import 'package:bookia/features/cart/data/repo/cart_repo.dart';
 import 'package:bookia/features/home/data/models/best_seller_response/best_seller_response.dart';
 import 'package:bookia/features/home/data/models/best_seller_response/product.dart';
 import 'package:bookia/features/home/data/models/slider_response/slider.dart';
 import 'package:bookia/features/home/data/models/slider_response/slider_response.dart';
 import 'package:bookia/features/home/data/repo/home_repo.dart';
 import 'package:bookia/features/home/presentation/cubit/home_state.dart';
+import 'package:bookia/features/wishlist/data/repo/wishlist_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -32,6 +34,28 @@ class HomeCubit extends Cubit<HomeState> {
         emit(HomeErrorState());
       }
     } on Exception catch (_) {
+      emit(HomeErrorState());
+    }
+  }
+
+  addToWishlist({required int id}) async {
+    emit(HomeLoadingState());
+
+    var res = await WishlistRepo.addToWishlist(id: id);
+    if (res != null) {
+      emit(HomeSuccessState(message: "Added to wishlist"));
+    } else {
+      emit(HomeErrorState());
+    }
+  }
+
+  addToCart({required int id}) async {
+    emit(HomeLoadingState());
+
+    var res = await CartRepo.addToCart(id: id);
+    if (res != null) {
+      emit(HomeSuccessState(message: "Added to cart"));
+    } else {
       emit(HomeErrorState());
     }
   }

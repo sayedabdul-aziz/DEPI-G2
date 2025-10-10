@@ -22,4 +22,40 @@ class WishlistRepo {
       return null;
     }
   }
+
+  static Future<WishlistResponse?> removeFromWishlist({required int id}) async {
+    try {
+      var res = await DioProvider.post(
+        endpoint: ApiEndpoints.removeFromWishlist,
+        data: {"product_id": id},
+        headers: {"Authorization": "Bearer ${SharedPref.getToken()}"},
+      );
+      if (res.statusCode == 200) {
+        return WishlistResponse.fromJson(res.data);
+      } else {
+        return null;
+      }
+    } on Exception catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  static Future<WishlistResponse?> addToWishlist({required int id}) async {
+    try {
+      var res = await DioProvider.post(
+        endpoint: ApiEndpoints.addToWishlist,
+        data: {"product_id": id},
+        headers: {"Authorization": "Bearer ${SharedPref.getToken()}"},
+      );
+      if (res.statusCode == 200) {
+        return WishlistResponse.fromJson(res.data);
+      } else {
+        return null;
+      }
+    } on Exception catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
 }
