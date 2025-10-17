@@ -2,6 +2,7 @@ import 'package:bookia/core/utils/app_colors.dart';
 import 'package:bookia/core/utils/text_styles.dart';
 import 'package:bookia/core/widgets/dialogs.dart';
 import 'package:bookia/features/cart/data/models/cart_response/cart_item.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -48,8 +49,8 @@ class CartCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                product.itemProductImage ?? '',
+              child: CachedNetworkImage(
+                imageUrl: product.itemProductImage ?? '',
                 width: 110,
                 fit: BoxFit.cover,
               ),

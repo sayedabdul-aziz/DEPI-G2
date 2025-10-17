@@ -1,9 +1,13 @@
+import 'dart:convert';
+
+import 'package:bookia/features/auth/data/models/response/auth_response/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPref {
   static late SharedPreferences prefs;
 
   static const kToken = 'token';
+  static const kUserData = 'kUserData';
 
   static init() async {
     prefs = await SharedPreferences.getInstance();
@@ -16,6 +20,23 @@ class SharedPref {
 
   static String? getToken() {
     return getData(kToken);
+  }
+
+  static setUserData(User? user) {
+    if (user == null) return;
+    // obj ==> toJson(encode) => String
+    var objToJson = user.toJson();
+    String userString = jsonEncode(objToJson);
+    setData(kUserData, userString);
+  }
+
+  static User? getUserData() {
+    var cachedString = getData(kUserData);
+    if (cachedString == null) return null;
+
+    // string(decode) ==> toJson => obj
+    var stringToJson = jsonDecode(cachedString);
+    return User.fromJson(stringToJson);
   }
 
   static setData(String key, dynamic value) {

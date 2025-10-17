@@ -1,6 +1,7 @@
 import 'package:bookia/core/utils/app_colors.dart';
 import 'package:bookia/core/utils/text_styles.dart';
 import 'package:bookia/features/home/data/models/best_seller_response/product.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -45,8 +46,8 @@ class WishlistCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                product.image ?? '',
+              child: CachedNetworkImage(
+                imageUrl: product.image ?? '',
                 width: 110,
                 fit: BoxFit.cover,
               ),

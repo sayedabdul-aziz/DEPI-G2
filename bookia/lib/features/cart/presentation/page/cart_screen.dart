@@ -1,6 +1,9 @@
 import 'package:bookia/core/constants/app_images.dart';
+import 'package:bookia/core/routes/navigation.dart';
+import 'package:bookia/core/routes/routes.dart';
 import 'package:bookia/core/utils/app_colors.dart';
 import 'package:bookia/core/utils/text_styles.dart';
+import 'package:bookia/core/widgets/dialogs.dart';
 import 'package:bookia/core/widgets/main_button.dart';
 import 'package:bookia/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:bookia/features/cart/presentation/cubit/cart_state.dart';
@@ -19,11 +22,28 @@ class CartScreen extends StatelessWidget {
       create: (context) => CartCubit()..getCart(),
       child: Scaffold(
         appBar: AppBar(title: const Text('Cart')),
-        body: BlocBuilder<CartCubit, CartState>(
+        body: BlocConsumer<CartCubit, CartState>(
+          buildWhen: (previous, current) =>
+              current is CartLoadingState ||
+              current is CartSuccessState ||
+              current is CartErrorState,
+          listener: (context, state) {
+            if (state is CheckoutLoadingState) {
+              showLoadingDialog(context);
+            } else if (state is CheckoutSuccessState) {
+              var total =
+                  context.read<CartCubit>().cartResponse?.data?.total ?? '0';
+              pop(context);
+              pushTo(context, Routes.placeOrder, extra: total);
+            } else if (state is CheckoutErrorState) {
+              pop(context);
+              showMyDialog(context, 'Something went wrong');
+            }
+          },
           builder: (context, state) {
             var cubit = context.read<CartCubit>();
             var books = cubit.cartResponse?.data?.cartItems ?? [];
-            if (state is! CartSuccessState) {
+            if (state is CartLoadingState || state is CartErrorState) {
               return const Center(child: CircularProgressIndicator());
             } else if (books.isEmpty == true) {
               return _emptyCart();
@@ -71,7 +91,12 @@ class CartScreen extends StatelessWidget {
                           ],
                         ),
                         const Gap(10),
-                        MainButton(text: 'Checkout', onPressed: () {}),
+                        MainButton(
+                          text: 'Checkout',
+                          onPressed: () {
+                            cubit.checkout();
+                          },
+                        ),
                         const Gap(20),
                       ],
                     ),

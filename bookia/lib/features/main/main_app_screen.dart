@@ -2,12 +2,14 @@ import 'package:bookia/core/constants/app_images.dart';
 import 'package:bookia/core/utils/app_colors.dart';
 import 'package:bookia/features/cart/presentation/page/cart_screen.dart';
 import 'package:bookia/features/home/presentation/page/home_screen.dart';
+import 'package:bookia/features/profile/presentation/page/profile_screen.dart';
 import 'package:bookia/features/wishlist/presentation/page/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class MainAppScreen extends StatefulWidget {
-  const MainAppScreen({super.key});
+  const MainAppScreen({super.key, this.initialIndex});
+  final int? initialIndex;
 
   @override
   State<MainAppScreen> createState() => _MainAppScreenState();
@@ -20,8 +22,15 @@ class _MainAppScreenState extends State<MainAppScreen> {
     HomeScreen(),
     WishlistScreen(),
     CartScreen(),
-    Container(),
+    ProfileScreen(),
   ];
+
+  @override
+  void didUpdateWidget(covariant MainAppScreen oldWidget) {
+    _currentIndex = widget.initialIndex ?? _currentIndex;
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

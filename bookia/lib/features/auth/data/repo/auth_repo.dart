@@ -19,6 +19,7 @@ class AuthRepo {
         var data = AuthResponse.fromJson(res.data);
         // cache token
         SharedPref.saveToken(data.data?.token);
+        SharedPref.setUserData(data.data?.user);
         return data;
       } else {
         return null;
@@ -40,6 +41,7 @@ class AuthRepo {
         var data = AuthResponse.fromJson(res.data);
         // cache token
         SharedPref.saveToken(data.data?.token);
+        SharedPref.setUserData(data.data?.user);
         return data;
       } else {
         return null;
