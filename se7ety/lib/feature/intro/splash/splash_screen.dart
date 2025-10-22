@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:se7ety/core/constants/app_images.dart';
+import 'package:se7ety/core/routes/navigation.dart';
+import 'package:se7ety/core/routes/routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -10,24 +12,16 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 3), () {
+      pushWithReplacement(context, Routes.onboarding);
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              Navigator.pushNamed(context, '/settings');
-            },
-          ),
-        ],
-      ),
       body: Center(child: Image.asset(AppImages.logo, width: 250)),
     );
   }

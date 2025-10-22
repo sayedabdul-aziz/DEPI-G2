@@ -6,11 +6,13 @@ class PasswordTextFormField extends StatefulWidget {
     required this.controller,
     this.validator,
     this.hintText,
+    this.prefixIcon,
   });
 
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final String? hintText;
+  final Widget? prefixIcon;
 
   @override
   State<PasswordTextFormField> createState() => _PasswordTextFormFieldState();
@@ -25,6 +27,7 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
       controller: widget.controller,
       decoration: InputDecoration(
         hintText: widget.hintText,
+        prefixIcon: widget.prefixIcon,
         suffixIcon: GestureDetector(
           onTap: () {
             setState(() {

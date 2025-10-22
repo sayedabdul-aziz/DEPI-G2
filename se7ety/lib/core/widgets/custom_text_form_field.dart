@@ -12,16 +12,20 @@ class CustomTextFormField extends StatelessWidget {
     this.keyboardType,
     this.inputFormatters,
     this.onTap,
+    this.prefixIcon,
+    this.textInputAction,
   });
 
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final String? hintText;
   final Widget? suffixIcon;
+  final Widget? prefixIcon;
   final bool readOnly;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final Function()? onTap;
+  final TextInputAction? textInputAction;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,12 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       readOnly: readOnly,
-      decoration: InputDecoration(hintText: hintText, suffixIcon: suffixIcon),
+      textInputAction: textInputAction,
+      decoration: InputDecoration(
+        hintText: hintText,
+        suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon,
+      ),
       validator: validator,
       inputFormatters: inputFormatters,
       onTap: onTap,

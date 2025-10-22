@@ -1,3 +1,3 @@
 class AppFonts {
-  static const String cairoFamily = 'cairoFamily';
+  static const String cairoFamily = 'Cairo';
 }

@@ -5,7 +5,7 @@ Future pushTo(BuildContext context, String path, {Object? extra}) {
   return context.push(path, extra: extra);
 }
 
-pushReplacementTo(BuildContext context, String path, {Object? extra}) {
+pushWithReplacement(BuildContext context, String path, {Object? extra}) {
   context.pushReplacement(path, extra: extra);
 }
 
