@@ -21,9 +21,9 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 3), () {
       if (user != null) {
         if (user.photoURL == "1") {
-          pushWithReplacement(context, Routes.welcome);
+          pushWithReplacement(context, Routes.patientMain);
         } else {
-          // pushWithReplacement(context, Routes.patientMain);
+          // pushWithReplacement(context, Routes.doctorMain);
         }
       } else {
         if (isOnboardingShown) {

@@ -55,12 +55,12 @@ class AuthCubit extends Cubit<AuthState> {
           );
       User? user = credential.user;
       user?.updateDisplayName(nameController.text);
-      // email and uid, display name
+      //! Use photoURL to store user role
+      user?.updatePhotoURL(userType == UserTypeEnum.doctor ? "2" : "1");
+      // email and uid, display name, Role
 
       // store user data into firestore (Target Db)
       if (userType == UserTypeEnum.doctor) {
-        // use photo url as "ROLE"
-        user?.updatePhotoURL("2");
         var model = DoctorModel(
           name: nameController.text,
           email: emailController.text,
@@ -72,7 +72,6 @@ class AuthCubit extends Cubit<AuthState> {
             .doc(user?.uid)
             .set(model.toJson());
       } else {
-        user?.updatePhotoURL("1");
         var model = PatientModel(
           name: nameController.text,
           email: emailController.text,
