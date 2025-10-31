@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:se7ety/core/routes/navigation.dart';
 import 'package:se7ety/core/routes/routes.dart';
+import 'package:se7ety/core/services/local/shared_pref.dart';
 import 'package:se7ety/core/utils/app_colors.dart';
 import 'package:se7ety/core/utils/text_styles.dart';
 import 'package:se7ety/core/widgets/main_button.dart';
@@ -27,6 +28,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           if (currentIndex != 2)
             TextButton(
               onPressed: () {
+                SharedPref.setOnBoardingShown();
                 pushWithReplacement(context, Routes.welcome);
               },
               child: Text(
@@ -100,6 +102,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       height: 45,
                       text: 'هيا بنا',
                       onPressed: () {
+                        SharedPref.setOnBoardingShown();
                         pushWithReplacement(context, Routes.welcome);
                       },
                     ),

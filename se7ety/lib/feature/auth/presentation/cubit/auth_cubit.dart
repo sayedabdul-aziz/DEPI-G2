@@ -15,6 +15,16 @@ class AuthCubit extends Cubit<AuthState> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  String? specialization;
+  String? imageUrl;
+
+  final bioController = TextEditingController();
+  final phone1Controller = TextEditingController();
+  final phone2Controller = TextEditingController();
+  final addressController = TextEditingController();
+  final openHourController = TextEditingController();
+  final closeHourController = TextEditingController();
+
   login() async {
     emit(AuthLoadingState());
     try {
@@ -36,7 +46,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   register({required UserTypeEnum userType}) async {
     emit(AuthLoadingState());
-    // login with firebase
+    // register with firebase
     try {
       var credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
@@ -49,24 +59,27 @@ class AuthCubit extends Cubit<AuthState> {
 
       // store user data into firestore (Target Db)
       if (userType == UserTypeEnum.doctor) {
+        // use photo url as "ROLE"
+        user?.updatePhotoURL("2");
         var model = DoctorModel(
           name: nameController.text,
           email: emailController.text,
           uid: user?.uid,
           rating: 3,
         );
-        FirebaseFirestore.instance
+        await FirebaseFirestore.instance
             .collection('doctor')
             .doc(user?.uid)
             .set(model.toJson());
       } else {
+        user?.updatePhotoURL("1");
         var model = PatientModel(
           name: nameController.text,
           email: emailController.text,
           uid: user?.uid,
         );
 
-        FirebaseFirestore.instance
+        await FirebaseFirestore.instance
             .collection('patient')
             .doc(user?.uid)
             .set(model.toJson());
@@ -82,6 +95,32 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthErrorState('حدث خطأ ما'));
       }
     } catch (e) {
+      emit(AuthErrorState('حدث خطأ ما'));
+    }
+  }
+
+  updateDoctorData() async {
+    emit(AuthLoadingState());
+
+    var model = DoctorModel(
+      uid: FirebaseAuth.instance.currentUser?.uid,
+      bio: bioController.text,
+      phone1: phone1Controller.text,
+      phone2: phone2Controller.text,
+      address: addressController.text,
+      openHour: openHourController.text,
+      closeHour: closeHourController.text,
+      specialization: specialization,
+      image: imageUrl,
+    );
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('doctor')
+          .doc(model.uid)
+          .update(model.toUpdateData());
+      emit(AuthSuccessState());
+    } on Exception catch (_) {
       emit(AuthErrorState('حدث خطأ ما'));
     }
   }

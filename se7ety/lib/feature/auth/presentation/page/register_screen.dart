@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -45,7 +43,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
             showLoadingDialog(context);
           } else if (state is AuthSuccessState) {
             pop(context);
-            log("Success");
+            if (widget.userType == UserTypeEnum.doctor) {
+              pushWithReplacement(context, Routes.doctorRegistration);
+            } else {
+              pushToBase(context, Routes.patientMain);
+            }
           } else if (state is AuthErrorState) {
             pop(context);
             showMyDialog(context, state.error);
