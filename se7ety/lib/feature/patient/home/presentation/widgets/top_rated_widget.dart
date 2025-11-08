@@ -17,7 +17,7 @@ import 'package:se7ety/feature/auth/data/models/doctor_model.dart';
 // - pagination (limit) => collection.limit(number).get()
 
 //! set
-// specific document => Collection + doc ID
+// specific document => Collection + doc ID/ auto
 
 //! update
 // specific document => Collection + doc ID

@@ -1,37 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:se7ety/core/routes/navigation.dart';
+import 'package:se7ety/core/routes/routes.dart';
 import 'package:se7ety/core/utils/app_colors.dart';
 import 'package:se7ety/core/utils/text_styles.dart';
 import 'package:se7ety/feature/auth/data/models/doctor_model.dart';
 
 class DoctorCard extends StatelessWidget {
-  const DoctorCard({super.key, required this.doctor, this.isClickable = true});
+  const DoctorCard({super.key, required this.doctor});
 
   final DoctorModel doctor;
-  final bool isClickable;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 0),
-      margin: const EdgeInsets.only(top: 10),
-      width: double.infinity,
-      height: 80,
-      decoration: BoxDecoration(
-        color: Colors.blue[50],
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            offset: const Offset(-3, 0),
-            blurRadius: 15,
-            color: Colors.grey.withOpacity(.1),
-          ),
-        ],
-      ),
-      child: InkWell(
-        onTap: () {
-          if (isClickable) {
-            // pushTo(context, Routes.doctorProfile, extra: doctor);
-          }
-        },
+    return GestureDetector(
+      onTap: () {
+        pushTo(context, Routes.doctorProfile, extra: doctor);
+      },
+      child: Container(
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 0),
+        margin: const EdgeInsets.only(top: 10),
+        width: double.infinity,
+        height: 80,
+        decoration: BoxDecoration(
+          color: Colors.blue[50],
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              offset: const Offset(-3, 0),
+              blurRadius: 15,
+              color: Colors.grey.withOpacity(.1),
+            ),
+          ],
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

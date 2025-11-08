@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:se7ety/feature/auth/data/models/doctor_model.dart';
 import 'package:se7ety/feature/auth/data/models/user_type_enum.dart';
 import 'package:se7ety/feature/auth/presentation/cubit/auth_cubit.dart';
 import 'package:se7ety/feature/auth/presentation/page/doctor_registeration_screen.dart';
@@ -8,9 +9,11 @@ import 'package:se7ety/feature/auth/presentation/page/register_screen.dart';
 import 'package:se7ety/feature/intro/onboarding/onboarding_screen.dart';
 import 'package:se7ety/feature/intro/splash/splash_screen.dart';
 import 'package:se7ety/feature/intro/welcome/welcome_screen.dart';
+import 'package:se7ety/feature/patient/booking/presentation/booking_view.dart';
 import 'package:se7ety/feature/patient/home/presentation/page/home_search_screen.dart';
 import 'package:se7ety/feature/patient/home/presentation/page/specialization_search_screen.dart';
 import 'package:se7ety/feature/patient/main/nav_bar.dart';
+import 'package:se7ety/feature/patient/search/page/doctor_profile_screen.dart';
 
 class Routes {
   static const String splash = '/';
@@ -22,6 +25,8 @@ class Routes {
   static const String patientMain = '/patientMain';
   static const String specializationSearch = '/specializationSearch';
   static const String homeSearch = '/homeSearch';
+  static const String doctorProfile = '/doctorProfile';
+  static const String booking = '/booking';
 
   static final routes = GoRouter(
     initialLocation: splash,
@@ -69,6 +74,16 @@ class Routes {
         path: homeSearch,
         builder: (context, state) =>
             HomeSearchScreen(searchKey: state.extra as String),
+      ),
+      GoRoute(
+        path: doctorProfile,
+        builder: (context, state) =>
+            DoctorProfileScreen(doctorModel: state.extra as DoctorModel?),
+      ),
+      GoRoute(
+        path: booking,
+        builder: (context, state) =>
+            BookingFormScreen(doctorModel: state.extra as DoctorModel),
       ),
     ],
   );
