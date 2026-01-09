@@ -1,1 +1,12 @@
-{}
+{
+    "welcome": "Welcome",
+    "sign_and_book": "Sign and Book Now",
+    "sign_as": "Sign as",
+    "doctor": "Doctor",
+    "patient": "Patient",
+    "home": "Home",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout",
+    "language": "العربية"
+}

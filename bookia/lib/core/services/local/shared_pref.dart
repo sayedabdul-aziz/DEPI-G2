@@ -1,7 +1,9 @@
 import 'dart:convert';
 
-import 'package:bookia/features/auth/data/models/response/auth_response/user.dart';
+import 'package:bookia/features/auth/domain/entities/response/auth_response/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+//
 
 class SharedPref {
   static late SharedPreferences prefs;
@@ -12,6 +14,8 @@ class SharedPref {
   static init() async {
     prefs = await SharedPreferences.getInstance();
   }
+
+  static SharedPref get instance => SharedPref();
 
   static saveToken(String? token) {
     if (token == null) return;

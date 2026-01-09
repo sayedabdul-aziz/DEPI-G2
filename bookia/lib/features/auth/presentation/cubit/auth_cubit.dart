@@ -1,11 +1,15 @@
-import 'package:bookia/features/auth/data/models/request/auth_params.dart';
-import 'package:bookia/features/auth/data/repo/auth_repo.dart';
+import 'package:bookia/features/auth/domain/entities/request/auth_params.dart';
+import 'package:bookia/features/auth/domain/usecases/login_use_case.dart';
+import 'package:bookia/features/auth/domain/usecases/register_use_case.dart';
 import 'package:bookia/features/auth/presentation/cubit/auth_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthInitialState());
+  final LoginUseCase loginUseCase;
+  final RegisterUseCase registerUseCase;
+  AuthCubit({required this.loginUseCase, required this.registerUseCase})
+    : super(AuthInitialState());
 
   var formKey = GlobalKey<FormState>();
   var nameController = TextEditingController();
@@ -23,13 +27,16 @@ class AuthCubit extends Cubit<AuthState> {
       passwordConfirmation: confirmPasswordController.text,
     );
 
-    var res = await AuthRepo.register(params);
+    var result = await registerUseCase.call(params);
 
-    if (res != null) {
-      emit(AuthSuccessState());
-    } else {
-      emit(AuthErrorState());
-    }
+    result.fold(
+      (left) {
+        emit(AuthErrorState(message: left.errorMessage));
+      },
+      (right) {
+        emit(AuthSuccessState());
+      },
+    );
   }
 
   login() async {
@@ -40,12 +47,15 @@ class AuthCubit extends Cubit<AuthState> {
       password: passwordController.text,
     );
 
-    var res = await AuthRepo.login(params);
+    var result = await loginUseCase.call(params);
 
-    if (res != null) {
-      emit(AuthSuccessState());
-    } else {
-      emit(AuthErrorState());
-    }
+    result.fold(
+      (left) {
+        emit(AuthErrorState(message: left.errorMessage));
+      },
+      (right) {
+        emit(AuthSuccessState());
+      },
+    );
   }
 }

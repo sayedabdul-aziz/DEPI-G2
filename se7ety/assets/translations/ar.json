@@ -1,8 +1,12 @@
 {
+    "welcome": "اهلا بيك",
+    "sign_and_book": "سجل واحجز الآن",
+    "sign_as": "سجل دلوقتي كــ",
+    "doctor": "دكتور",
+    "patient": "مريض",
     "home": "الصفحة الرئيسية",
     "profile": "الملف الشخصي",
     "settings": "الاعدادات",
     "logout": "تسجيل الخروج",
-    "english": "الانجليزية",
-    "arabic": "العربية"
+    "language": "English"
 }

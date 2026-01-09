@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:se7ety/feature/auth/data/models/doctor_model.dart';
@@ -15,6 +16,10 @@ import 'package:se7ety/feature/patient/home/presentation/page/specialization_sea
 import 'package:se7ety/feature/patient/main/nav_bar.dart';
 import 'package:se7ety/feature/patient/search/page/doctor_profile_screen.dart';
 
+var navigatorKey = GlobalKey<NavigatorState>();
+
+var globalContext = navigatorKey.currentContext;
+
 class Routes {
   static const String splash = '/';
   static const String onboarding = '/onboarding';
@@ -30,6 +35,7 @@ class Routes {
 
   static final routes = GoRouter(
     initialLocation: splash,
+    navigatorKey: navigatorKey,
     routes: [
       GoRoute(path: splash, builder: (context, state) => const SplashScreen()),
       GoRoute(

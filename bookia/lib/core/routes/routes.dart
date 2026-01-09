@@ -1,3 +1,6 @@
+import 'package:bookia/core/di/service_locator.dart';
+import 'package:bookia/features/auth/domain/usecases/login_use_case.dart';
+import 'package:bookia/features/auth/domain/usecases/register_use_case.dart';
 import 'package:bookia/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:bookia/features/auth/presentation/page/forget_password/forget_send_email_screen.dart';
 import 'package:bookia/features/auth/presentation/page/login_screen.dart';
@@ -37,22 +40,28 @@ class Routes {
       GoRoute(
         path: login,
         builder: (context, state) => BlocProvider(
-          create: (context) => AuthCubit(),
+          create: (context) => AuthCubit(
+            loginUseCase: gi<LoginUseCase>(),
+            registerUseCase: gi<RegisterUseCase>(),
+          ),
           child: const LoginScreen(),
         ),
       ),
       GoRoute(
         path: register,
         builder: (context, state) => BlocProvider(
-          create: (context) => AuthCubit(),
+          create: (context) => AuthCubit(
+            loginUseCase: gi<LoginUseCase>(),
+            registerUseCase: gi<RegisterUseCase>(),
+          ),
           child: const RegisterScreen(),
         ),
       ),
 
       GoRoute(
         path: forgetSendEmail,
-        builder: (context, state) => BlocProvider(
-          create: (context) => AuthCubit(),
+        builder: (context, state) => BlocProvider.value(
+          value: gi<AuthCubit>(),
           child: ForgetSendEmailScreen(email: state.extra as String),
         ),
       ),
